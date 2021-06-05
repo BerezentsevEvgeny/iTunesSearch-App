@@ -217,9 +217,6 @@
                             <outlet property="delegate" destination="T5c-mz-q36" id="KHK-Fa-StW"/>
                         </connections>
                     </collectionView>
-                    <connections>
-                        <outlet property="flowLayout" destination="5mR-E2-0Jh" id="4nO-f1-QHh"/>
-                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fnW-Ow-3lL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

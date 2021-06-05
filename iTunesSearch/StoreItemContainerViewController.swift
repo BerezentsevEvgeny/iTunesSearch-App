@@ -11,7 +11,6 @@ class StoreItemContainerViewController: UIViewController, UISearchResultsUpdatin
 
     var tableViewDataSource: UITableViewDiffableDataSource<String, StoreItem>!
     var collectionViewDataSource: UICollectionViewDiffableDataSource<String, StoreItem>!
-    
     var itemsSnapshot = NSDiffableDataSourceSnapshot <String, StoreItem>()
     
     var selectedSearchScope: SearchScope {
@@ -19,6 +18,8 @@ class StoreItemContainerViewController: UIViewController, UISearchResultsUpdatin
         let searchScope = SearchScope.allCases[selectedIndex]
         return searchScope
     }
+    
+    weak var collectionViewController: StoreItemCollectionViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +38,8 @@ class StoreItemContainerViewController: UIViewController, UISearchResultsUpdatin
         }
         
         if let collectionViewController = segue.destination as? StoreItemCollectionViewController {
+            self.collectionViewController = collectionViewController
+            collectionViewController.configureCollectionViewLayout(for: selectedSearchScope)
             configureCollectionViewDataSource(collectionViewController.collectionView)
         }
     }
@@ -75,9 +78,11 @@ class StoreItemContainerViewController: UIViewController, UISearchResultsUpdatin
     func handleFetcheditems(_ items: [StoreItem]) {
         let currentSnapshot = itemsSnapshot.itemIdentifiers
         itemsSnapshot = createSectionedSnapshot(from: currentSnapshot + items)
-        
+    
         tableViewDataSource.apply(itemsSnapshot, animatingDifferences: true)
         collectionViewDataSource.apply(itemsSnapshot, animatingDifferences: true)
+        
+        collectionViewController?.configureCollectionViewLayout(for: selectedSearchScope)
     }
     
     @objc func fetchMatchingItems() {
@@ -149,12 +154,35 @@ class StoreItemContainerViewController: UIViewController, UISearchResultsUpdatin
         return snapshot
     }
     
+    
+}
 
+// Extension for changing layout behavior
+extension SearchScope {
+    var orthogonalScrollingBehavior: UICollectionLayoutSectionOrthogonalScrollingBehavior {
+        switch self {
+        case .all:
+            return .continuousGroupLeadingBoundary
+        default:
+            return .none
+        }
+    }
     
-
+    var groupItemCount: Int {
+        switch self {
+        case .all:
+            return 1
+        default:
+            return 3
+        }
+    }
     
-    
-    
-    
-    
+    var groupWidthDimension: NSCollectionLayoutDimension {
+        switch self {
+        case .all:
+            return .fractionalWidth(1/3)
+        default:
+            return .fractionalWidth(1.0)
+        }
+    }
 }
