@@ -12,14 +12,7 @@ class StoreItemContainerViewController: UIViewController, UISearchResultsUpdatin
     var tableViewDataSource: UITableViewDiffableDataSource<String, StoreItem>!
     var collectionViewDataSource: UICollectionViewDiffableDataSource<String, StoreItem>!
     
-    var items = [StoreItem]()
-    var itemsSnapshot: NSDiffableDataSourceSnapshot<String, StoreItem> {
-        var snapshot = NSDiffableDataSourceSnapshot<String, StoreItem>()
-        snapshot.appendSections(["Results"])
-        snapshot.appendItems(items)
-        
-        return snapshot
-    }
+    var itemsSnapshot = NSDiffableDataSourceSnapshot <String, StoreItem>()
     
     var selectedSearchScope: SearchScope {
         let selectedIndex = searchController.searchBar.selectedScopeButtonIndex
@@ -76,10 +69,20 @@ class StoreItemContainerViewController: UIViewController, UISearchResultsUpdatin
         collectionContainerView.isHidden.toggle()
     }
     
+    func handleFetcheditems(_ items: [StoreItem]) {
+        let currentSnapshot = itemsSnapshot.itemIdentifiers
+        var updatedSnapshot = NSDiffableDataSourceSnapshot<String,StoreItem>()
+        updatedSnapshot.appendSections(["Results"])
+        updatedSnapshot.appendItems(currentSnapshot + items)
+        itemsSnapshot = updatedSnapshot
+        
+        tableViewDataSource.apply(itemsSnapshot, animatingDifferences: true)
+        collectionViewDataSource.apply(itemsSnapshot, animatingDifferences: true)
+    }
+    
     @objc func fetchMatchingItems() {
         
-        self.items = []
-        
+        itemsSnapshot.deleteAllItems()
         // apply data source changes
         tableViewDataSource.apply(itemsSnapshot, animatingDifferences: true, completion: nil)
         collectionViewDataSource.apply(itemsSnapshot, animatingDifferences: true, completion: nil)
@@ -88,35 +91,51 @@ class StoreItemContainerViewController: UIViewController, UISearchResultsUpdatin
         
         if !searchTerm.isEmpty {
             
+            let searchScopes: [SearchScope]
+            if selectedSearchScope == .all {
+                searchScopes = [.movies, .music, .apps, .books]
+            } else {
+                searchScopes = [selectedSearchScope]
+            }
             // set up query dictionary
-            let query = [
-                "term": searchTerm,
-                "media": selectedSearchScope.mediaType,
-                "lang": "en_us",
-                "limit": "20"
-            ]
-            
-            // use the item controller to fetch items
-            storeItemController.fetchItems(matching: query) { (result) in
-                switch result {
-                case .success(let items):
-                    // if successful, use the main queue to set self.items and reload the table view
-                    DispatchQueue.main.async {
-                        guard searchTerm == self.searchController.searchBar.text else {
-                            return
+            for searchScope in searchScopes {
+                let query = [
+                    "term": searchTerm,
+                    "media": searchScope.mediaType,
+                    "lang": "en_us",
+                    "limit": "20"
+                ]
+                
+                // use the item controller to fetch items
+                storeItemController.fetchItems(matching: query) { (result) in
+                    switch result {
+                    case .success(let items):
+                        // if successful, use the main queue to set self.items and reload the table view
+                        DispatchQueue.main.async {
+                            guard searchTerm == self.searchController.searchBar.text else {
+                                return
+                            }
+                            // apply data source changes
+                            self.handleFetcheditems(items)
                         }
-                        
-                        self.items = items
-                        // apply data source changes
-                        self.tableViewDataSource.apply(self.itemsSnapshot, animatingDifferences: true, completion: nil)
-                        self.collectionViewDataSource.apply(self.itemsSnapshot, animatingDifferences: true, completion: nil)
+                    case .failure(let error):
+                        // otherwise, print an error to the console
+                        print(error)
                     }
-                case .failure(let error):
-                    // otherwise, print an error to the console
-                    print(error)
                 }
             }
+
+            
+
         }
+        
     }
+    
+    
+    
+    
+    
+    
+    
     
 }
