@@ -8,14 +8,6 @@ class StoreItemCollectionViewController: UICollectionViewController {
         
         collectionView.register(StoreItemCollectionViewSectionHeader.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: StoreItemCollectionViewSectionHeader.reuseIdentifier)
         
-
-//        let availableWidth = view.frame.width
-//        let itemWidth = (availableWidth - (8*4)) / 3
-//        let itemSize = CGSize(width: itemWidth, height: itemWidth * 2)
-//        let minimumInterItemSpacing: CGFloat = 8
-//        let minimumLineSpacing: CGFloat = 12
-
-
     }
    
     func configureCollectionViewLayout(for searchScope: SearchScope) {
