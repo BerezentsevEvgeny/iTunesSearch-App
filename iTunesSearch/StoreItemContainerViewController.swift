@@ -42,12 +42,7 @@ class StoreItemContainerViewController: UIViewController, UISearchResultsUpdatin
     }
     
     func configureTableViewDataSource(_ tableView: UITableView) {
-        tableViewDataSource = UITableViewDiffableDataSource<String, StoreItem>(tableView: tableView, cellProvider: { (tableView, indexPath, item) -> UITableViewCell? in
-            let cell = tableView.dequeueReusableCell(withIdentifier: "Item", for: indexPath) as! ItemTableViewCell
-            cell.configure(for: item, storeItemController: self.storeItemController)
-
-            return cell
-        })
+        tableViewDataSource = StoreItemTableViewDiffableDataSource(tableView: tableView, storeItemController: storeItemController)
     }
     
     func configureCollectionViewDataSource(_ collectionView: UICollectionView) {
@@ -145,6 +140,10 @@ class StoreItemContainerViewController: UIViewController, UISearchResultsUpdatin
         }
         return snapshot
     }
+    
+
+    
+
     
     
     
