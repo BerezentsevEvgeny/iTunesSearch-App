@@ -52,6 +52,14 @@ class StoreItemContainerViewController: UIViewController, UISearchResultsUpdatin
             
             return cell
         })
+        collectionViewDataSource.supplementaryViewProvider = {
+            collectionView, kind, indexPath -> UICollectionReusableView? in
+            
+            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: "Header", withReuseIdentifier: StoreItemCollectionViewSectionHeader.reuseIdentifier, for: indexPath) as! StoreItemCollectionViewSectionHeader
+            let title = self.itemsSnapshot.sectionIdentifiers[indexPath.section]
+            headerView.setTitle(title)
+            return headerView
+        }
     }
     
     func updateSearchResults(for searchController: UISearchController) {

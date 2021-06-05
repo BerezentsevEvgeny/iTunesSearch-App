@@ -8,6 +8,8 @@ class StoreItemCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        collectionView.register(StoreItemCollectionViewSectionHeader.self, forSupplementaryViewOfKind: "Header", withReuseIdentifier: StoreItemCollectionViewSectionHeader.reuseIdentifier)
+        
         let availableWidth = view.frame.width
         let itemWidth = (availableWidth - (8*4)) / 3
         let itemSize = CGSize(width: itemWidth, height: itemWidth * 2)
