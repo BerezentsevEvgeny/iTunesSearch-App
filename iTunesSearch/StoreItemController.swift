@@ -3,6 +3,7 @@ import Foundation
 import UIKit
 
 class StoreItemController {
+    
     func fetchItems(matching query: [String: String], completion: @escaping (Result<[StoreItem], Error>) -> Void) {
         var urlComponents = URLComponents(string: "https://itunes.apple.com/search")!
         urlComponents.queryItems = query.map { URLQueryItem(name: $0.key, value: $0.value) }

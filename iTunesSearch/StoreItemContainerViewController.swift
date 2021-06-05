@@ -21,7 +21,11 @@ class StoreItemContainerViewController: UIViewController, UISearchResultsUpdatin
         return snapshot
     }
     
-    let queryOptions = ["movie", "music", "software", "ebook"]
+    var selectedSearchScope: SearchScope {
+        let selectedIndex = searchController.searchBar.selectedScopeButtonIndex
+        let searchScope = SearchScope.allCases[selectedIndex]
+        return searchScope
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +35,7 @@ class StoreItemContainerViewController: UIViewController, UISearchResultsUpdatin
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.automaticallyShowsSearchResultsController = true
         searchController.searchBar.showsScopeBar = true
-        searchController.searchBar.scopeButtonTitles = ["Movies", "Music", "Apps", "Books"]
+        searchController.searchBar.scopeButtonTitles = SearchScope.allCases.map {$0.title}
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -81,14 +85,13 @@ class StoreItemContainerViewController: UIViewController, UISearchResultsUpdatin
         collectionViewDataSource.apply(itemsSnapshot, animatingDifferences: true, completion: nil)
         
         let searchTerm = searchController.searchBar.text ?? ""
-        let mediaType = queryOptions[searchController.searchBar.selectedScopeButtonIndex]
         
         if !searchTerm.isEmpty {
             
             // set up query dictionary
             let query = [
                 "term": searchTerm,
-                "media": mediaType,
+                "media": selectedSearchScope.mediaType,
                 "lang": "en_us",
                 "limit": "20"
             ]

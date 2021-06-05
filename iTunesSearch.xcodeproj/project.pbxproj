@@ -20,6 +20,7 @@
 		18A6053323CF9ADA002037CA /* ItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A6053223CF9ADA002037CA /* ItemTableViewCell.swift */; };
 		18A6053523CFABBB002037CA /* StoreItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A6053423CFABBB002037CA /* StoreItem.swift */; };
 		18A6053723CFABDC002037CA /* StoreItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A6053623CFABDC002037CA /* StoreItemController.swift */; };
+		635B8B34266B64BB00E92CB0 /* SearchScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635B8B33266B64BB00E92CB0 /* SearchScope.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		18A6053223CF9ADA002037CA /* ItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTableViewCell.swift; sourceTree = "<group>"; };
 		18A6053423CFABBB002037CA /* StoreItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreItem.swift; sourceTree = "<group>"; };
 		18A6053623CFABDC002037CA /* StoreItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreItemController.swift; sourceTree = "<group>"; };
+		635B8B33266B64BB00E92CB0 /* SearchScope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScope.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,19 +74,28 @@
 			children = (
 				63A92AF826669DCA00AFF0DD /* Support */,
 				1821479023F60428005B6EFE /* ItemDisplaying.swift */,
-				18A6053223CF9ADA002037CA /* ItemTableViewCell.swift */,
-				1821478E23F602F3005B6EFE /* ItemCollectionViewCell.swift */,
+				635B8B32266B63B400E92CB0 /* Cells */,
 				18A6053423CFABBB002037CA /* StoreItem.swift */,
 				18A6053623CFABDC002037CA /* StoreItemController.swift */,
 				18A6053023CF9829002037CA /* StoreItemListTableViewController.swift */,
 				1812E9A223F36978009BBFA7 /* StoreItemCollectionViewController.swift */,
 				1812E9A023F35901009BBFA7 /* StoreItemContainerViewController.swift */,
+				635B8B33266B64BB00E92CB0 /* SearchScope.swift */,
 				18A6052523CF9803002037CA /* Assets.xcassets */,
 				18A6052223CF9802002037CA /* Main.storyboard */,
 				18A6052723CF9803002037CA /* LaunchScreen.storyboard */,
 				18A6052A23CF9803002037CA /* Info.plist */,
 			);
 			path = iTunesSearch;
+			sourceTree = "<group>";
+		};
+		635B8B32266B63B400E92CB0 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				18A6053223CF9ADA002037CA /* ItemTableViewCell.swift */,
+				1821478E23F602F3005B6EFE /* ItemCollectionViewCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		63A92AF826669DCA00AFF0DD /* Support */ = {
@@ -167,6 +178,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				18A6053323CF9ADA002037CA /* ItemTableViewCell.swift in Sources */,
+				635B8B34266B64BB00E92CB0 /* SearchScope.swift in Sources */,
 				1812E9A323F36978009BBFA7 /* StoreItemCollectionViewController.swift in Sources */,
 				18A6053523CFABBB002037CA /* StoreItem.swift in Sources */,
 				1821478F23F602F3005B6EFE /* ItemCollectionViewCell.swift in Sources */,
