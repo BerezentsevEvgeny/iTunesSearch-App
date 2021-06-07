@@ -1,4 +1,5 @@
 # iTunesSearch-Application
+Search for different kinds of media in Itunes and AppStore
 
 DiffableDataSource # CompositionalLayout # Generics # CollectionView # TableView # UISearchController
 
